@@ -68,15 +68,48 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!productName.getText().toString().isEmpty() && !productPrice.getText().toString().isEmpty()) {
-                    i
+                String name = productName.getText().toString();
+                String price = productPrice.getText().toString();
+                if (!name.isEmpty() && !price.isEmpty()) {
+                    Cursor cursor = dbHandler.findProduct(name, Double.parseDouble(price));
+                    view(cursor);
+                } else if (!name.isEmpty()) {
+                    Cursor cursor = dbHandler.findProduct(name);
+                    view(cursor);
+                } else if (!price.isEmpty()) {
+                    Cursor cursor = dbHandler.findProduct(Double.parseDouble(price));
+                    view(cursor);
+                } else {
+                    Toast.makeText(MainActivity.this, "No text Entered", Toast.LENGTH_SHORT).show();
+
+                }
             }
+
         });
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Delete product", Toast.LENGTH_SHORT).show();
+                Cursor cursor;
+                String name = productName.getText().toString();
+                String price = productPrice.getText().toString();
+                if (!name.isEmpty() && !price.isEmpty()) {
+                     cursor = dbHandler.findProduct(name, Double.parseDouble(price));
+                } else if (!name.isEmpty()) {
+                     cursor = dbHandler.findProduct(name);
+                } else if (!price.isEmpty()) {
+                     cursor = dbHandler.findProduct(Double.parseDouble(price));
+                } else {
+                    Toast.makeText(MainActivity.this, "No text Entered", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                while(cursor.moveToNext()) {
+                    dbHandler.deleteProduct(cursor.getString(0));
+                }
+                Toast.makeText(MainActivity.this, cursor.getCount()+" Entries Deleted", Toast.LENGTH_SHORT).show();
+                viewProducts();
+
             }
         });
 
@@ -114,4 +147,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
     }
-}
