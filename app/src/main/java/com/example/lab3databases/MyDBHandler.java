@@ -67,7 +67,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public Cursor findProduct(String name, double price) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_PRODUCT_PRICE + " = '" + price +"' AND " + " WHERE " + COLUMN_PRODUCT_NAME + " = '" + name +"'" ;
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_PRODUCT_PRICE + " = '" + price +"' AND " + COLUMN_PRODUCT_NAME + " = '" + name +"'" ;
         return db.rawQuery(query,null);
     }
 

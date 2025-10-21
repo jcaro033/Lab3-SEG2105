@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     view(cursor);
                 } else {
                     Toast.makeText(MainActivity.this, "No text Entered", Toast.LENGTH_SHORT).show();
-
+                    viewProducts();
                 }
             }
 
